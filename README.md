@@ -1,60 +1,110 @@
-# Smart Expense Tracker Starter
+<div align="center">
 
-This project is a simple expense tracking application with a React frontend and an Express backend.
+# 💸 SmartExpense
 
-## Features implemented
-- Login / Signup (basic in-memory auth) with styled card UI matching your mockups
-- Dashboard showing total expenses, income, balance and simple category bar chart
-- Add expense form with dropdown categories and date picker
-- Expense history table with edit/delete actions
-- Frontend routing with React Router and responsive design
-- Basic mobile-friendly styling to approximate provided screenshots
+**A premium dark-themed expense tracker built with React + Express**
 
-> The UI is intentionally minimal; you can expand with charts, styling, and mobile responsiveness.
+![Demo](docs/demo.webp)
 
-## Getting started
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Node](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)](https://expressjs.com)
 
-Two processes need to be started: backend and frontend.
+</div>
 
-> **Important:** make sure you run `npm install` in each folder before starting, otherwise the server will complain about missing modules (e.g. "Cannot find module 'express'" ).
-> Also ensure Node.js (v18+) and npm are installed on your machine.
+---
 
-### 1. Install dependencies
+## ✨ Features
 
+| Feature | Detail |
+|---|---|
+| 🔐 Auth | Sign up / Login / **Forgot password** (OTP flow) |
+| 📊 Dashboard | Animated stat cards, spending-by-category chart, recent transactions |
+| ➕ Add Expense | Category pill grid with emoji, ₹ amount input |
+| 📋 History | Searchable table, inline edit modal, inline delete confirm |
+| 💡 Budget | Set a monthly budget — progress bar turns red when over |
+| 🌙 Design | Dark glassmorphism theme, smooth animations, responsive |
+
+---
+
+## 🚀 Getting Started
+
+> **Node 18+ is required.** If you're on an older Node, install via [nvm](https://github.com/nvm-sh/nvm).
+
+### 1. Clone the repo
 ```bash
-# backend
-cd server
-npm install           # installs express, cors, etc.
-
-# frontend
-cd ../client
-npm install           # installs React, router, axios, etc.
+git clone https://github.com/<your-username>/smart-expense-tracker-starter.git
+cd smart-expense-tracker-starter
 ```
 
-> make sure you are using Node 18+ for compatibility with Vite.
-
-### 2. Run the server
-
+### 2. Start the backend
 ```bash
 cd server
+npm install
 node server.js
+# → API running at http://localhost:5000
 ```
 
-The API will be available at `http://localhost:5000`.
-
-### 3. Run the client
-
+### 3. Start the frontend (new terminal)
 ```bash
 cd client
+npm install
 npm run dev
+# → App running at http://localhost:5173
 ```
 
-Open http://localhost:5173 in your browser (vite default port). The app will connect to the backend automatically.
+Open **http://localhost:5173** in your browser.
 
+---
 
-## Notes
-- Data is stored in memory and will be lost when the server restarts. For production, integrate a database like SQLite or MongoDB.
-- Authentication is simplified: the server returns a numeric user id which is stored in `localStorage`. This is **not secure**; use JWT or sessions for real apps.
-- All API requests include the `x-user-id` header automatically via axios interceptor.
+## 🔑 Forgot Password Flow
 
-Feel free to style components and add charts as needed.
+1. Click **"Forgot password?"** on the login screen
+2. Enter your email — a 6-digit OTP is generated (check server console in dev mode)
+3. Enter the OTP code
+4. Set a new password (with live strength meter)
+
+> In development, the OTP is also returned in the API response and shown in the UI.  
+> For production, wire up an email provider (e.g. Nodemailer + SendGrid) to send the code.
+
+---
+
+## 🗂️ Project Structure
+
+```
+smart-expense-tracker-starter/
+├── client/                  # React + Vite frontend
+│   └── src/
+│       ├── pages/           # Login, Dashboard, AddExpense, History
+│       ├── components/      # Navbar, StatsCard, ExpenseChart, EditModal
+│       ├── api.js           # Axios instance with auth interceptor
+│       └── index.css        # Dark design system (CSS variables)
+└── server/
+    └── server.js            # Express API (auth, expenses, budget, OTP reset)
+```
+
+---
+
+## 📡 API Endpoints
+
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| POST | `/signup` | ✗ | Create account |
+| POST | `/login` | ✗ | Sign in |
+| POST | `/forgot-password` | ✗ | Request OTP code |
+| POST | `/reset-password` | ✗ | Reset password with OTP |
+| GET | `/expenses` | ✓ | List your expenses (newest first) |
+| POST | `/expenses` | ✓ | Add expense |
+| PUT | `/expenses/:id` | ✓ | Edit expense |
+| DELETE | `/expenses/:id` | ✓ | Delete expense |
+| GET | `/summary` | ✓ | Category totals, monthly breakdown |
+| GET/PUT | `/budget` | ✓ | Get/set monthly budget |
+
+---
+
+## ⚠️ Notes
+
+- **Data is in-memory** — lost on server restart. Add SQLite or MongoDB for persistence.
+- Auth uses a simple `x-user-id` header. Use **JWT + httpOnly cookies** for production.
+- The OTP `devOtp` field in the API response should be **removed in production**.

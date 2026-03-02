@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddExpense from './pages/AddExpense';
 import History from './pages/History';
+// App.css is intentionally not imported; all design tokens live in index.css
 
 function App() {
   return (

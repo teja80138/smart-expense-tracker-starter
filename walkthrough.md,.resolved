@@ -1,0 +1,61 @@
+# Smart Expense Tracker — Overhaul Walkthrough
+
+## What Was Done
+
+### Server ([server.js](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/server/server.js))
+- Added `GET /summary` — per-category totals, monthly breakdown, this-month total, count
+- Added `GET /PUT /budget` — set and read a monthly spending budget  
+- Better input validation (positive amounts, non-empty category, whitespace trimming)
+- Email normalization on signup/login
+- Expenses now returned sorted newest-first
+
+### Client (React/Vite)
+
+**Design System ([index.css](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/index.css))**  
+Complete dark design system with CSS custom properties: `--bg-base: #080c18`, violet accent `#6c63ff`, glassmorphism utilities, animated keyframes, Inter font from Google Fonts.
+
+**New Components**
+- [Navbar.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/components/Navbar.jsx) — Sticky glassmorphism nav with active route highlighting, user email, logout
+- [EditModal.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/components/EditModal.jsx) — Modal dialog with category pill grid, replaces `window.prompt`
+
+**Updated Components**
+- [StatsCard.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/components/StatsCard.jsx) — Animated easing counter, colored icon badge
+- [ExpenseChart.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/components/ExpenseChart.jsx) — Gradient horizontal bars per category, emoji icons, sorted by spending
+
+**Pages**
+- [Login.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/pages/Login.jsx) — Animated multi-color gradient BG, glassmorphism card, password visibility toggle, loading spinner, inline error
+- [Dashboard.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/pages/Dashboard.jsx) — Greeting with time-of-day, 4 animated stat cards, budget progress bar, full chart, recent transactions panel
+- [AddExpense.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/pages/AddExpense.jsx) — ₹-prefix big amount input, category pill grid (7 categories with emoji)
+- [History.jsx](file:///home/great/Documents/Web%20Development%20Projects/full%20stack/smart-expense-tracker-starter/client/src/pages/History.jsx) — Search/filter bar, styled table with emoji category chips, inline delete confirm (no browser dialogs), EditModal integration, total footer
+
+## Verification Screenshots
+
+### Login Page
+![Premium dark login page with glassmorphism card and animated gradient background](/home/great/.gemini/antigravity/brain/fa1d77d4-458a-4bc5-b011-3f37402cc1e8/login_page_1772443239570.png)
+
+### Final Dashboard (with 2 test expenses: ₹350 Food + ₹1,200 Travel = ₹1,550 total)
+![Dashboard showing animated stat cards and category spending chart](/home/great/.gemini/antigravity/brain/fa1d77d4-458a-4bc5-b011-3f37402cc1e8/final_dashboard_1772443622572.png)
+
+## Run Commands
+
+> **Important:** Your system uses **Node 12** by default. Vite requires Node 18+, which is now installed via nvm.
+
+**To run the frontend every time:**
+```bash
+/home/great/.nvm/versions/node/v18.20.8/bin/node \
+  /home/great/.nvm/versions/node/v18.20.8/bin/npm run dev
+```
+Or add this alias to your fish config (`~/.config/fish/config.fish`):
+```fish
+alias node18 "/home/great/.nvm/versions/node/v18.20.8/bin/node"
+alias npm18 "/home/great/.nvm/versions/node/v18.20.8/bin/npm"
+```
+Then just: `node18 node_modules/.bin/vite`
+
+**To run the server:**
+```bash
+node server.js  # works with any Node version
+```
+
+## Full Demo Recording
+![Full walkthrough — signup, add expenses, dashboard, history](/home/great/.gemini/antigravity/brain/fa1d77d4-458a-4bc5-b011-3f37402cc1e8/smart_expense_verification_1772443209179.webp)
